@@ -14,7 +14,8 @@ public class Compress
 		Boolean rerun = false;
 		Scanner sc = new Scanner(System.in);
 		int rehashed = 0;
-		long startTime, finalTime;
+		long startTime, finalTime, size, newSize;
+		String filename = args[0];
 
 		do 
 		{
@@ -23,9 +24,13 @@ public class Compress
 			{
 				try
 				{
-					String filename = args[0];
-	
-					//call log file method
+					//open connection to file for reading
+					BufferedReader readFile = new BufferedReader(new FileReader(filename));
+					
+					//create compressed file and log file
+					PrintWriter compFile = new PrintWriter(new FileWriter(filename + ".zzz");
+					PrintWriter logFile = new PrintWriter(new FileWriter(filename + ".zzz.log"));
+
 					badinput = false;
 				}
 				catch(IOException e)
@@ -37,13 +42,30 @@ public class Compress
 				}	
 			}
 			while(badinput);
-			
-			//TODO start timer
-			//TODO get size of OG file
-			//TODO compress file
-			//TODO end timer
-			//TODO get size of NEW file
+											
+			//start timer
+			startTime = System.currentTimeMillis(); 
+				//if doesnt work use System.nanoTime()
 
+			// get size of OG file
+			size = filename.length();
+			
+			//TODO compress file
+			logFile.println("Compression of " + filename);
+			
+			//end timerv
+			finalTime = System.currentTimeMillis() - startTime;
+
+			//get size of NEW file
+			newSize = compFile.length();
+
+			//write to log file
+			logFile.println("Compressed from " + size + " to " + size);
+			logFile.println("Compression took " + finalTime + " milliseconds");
+			//TODO: logFile.println("The dictionary contains " + *** + "total
+			//entries");
+			//logFile.println("The table was rehashed " + *** + " times");
+	
 			//ask user for rerun
 			System.out.println("Do you want to compress another file? (y or n)");
 			input = sc.nextLine();
@@ -57,7 +79,11 @@ public class Compress
 
 			//check for rerun
 			if(input.equalsIgnoreCase("y"))
+			{	
 				rerun = true;
+				System.out.println("\nEnter the new file name: ");
+				filename = sc.nextLine();
+			}
 			else
 				rerun = false;
 		}
