@@ -28,7 +28,7 @@ public class Compress
 					BufferedReader readFile = new BufferedReader(new FileReader(filename));
 					
 					//create compressed file and log file
-					PrintWriter compFile = new PrintWriter(new FileWriter(filename + ".zzz");
+					ObjectOutputStream compFile = new ObjectOutputStream(new FileOutputStream(filename + ".zzz");
 					PrintWriter logFile = new PrintWriter(new FileWriter(filename + ".zzz.log"));
 
 					badinput = false;
@@ -51,6 +51,38 @@ public class Compress
 			size = filename.length();
 			
 			//TODO compress file
+			//hash table object
+			HashTableChain<String, Integer> dict = new HashTableChain<String, Integer>;
+
+			//loop through and add common ASCII chars
+			int count=0;
+			for(i=32; i<127; i++)
+				dict.put(Character.toString(i), count);
+
+			//loop through the file to compress
+			//String toCompress = "";
+			//String line;
+			String prefix = "";
+			char character;
+			int value;
+			while(character = readFile.nextChar() != null)
+			{
+				prefix += character;
+				//if prefix is in dict
+				if(dict.get(prefix) != null) 
+				{
+					prefix += readFile.nextChar();
+					value = dict.get(prefix);
+				}
+				else if (dict.get(prefix) == null)
+				{
+					dict.put(prefix, count);
+					count++;
+					//add the next smallest prefix value to compress file
+					compFile.writeInt(value); //TODO will this write a binary number to it or do we need to convert it to a binary num??
+				}
+			}
+
 			logFile.println("Compression of " + filename);
 			
 			//end timerv
