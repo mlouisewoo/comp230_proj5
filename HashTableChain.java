@@ -153,11 +153,13 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 
 		return count;
 	}
-	public int hashCode(K key)
+	
+	/*public int hashCode(K key)
 	{
 		return Integer.valueOf((String)key);
 		//TODO: implement hashCode()
-	}
+	}*/
+
 	public void rehash()
 	{
 		/* 1. allocate a new hash table with 2xcapacity

@@ -16,6 +16,10 @@ public class Compress
 		int rehashed = 0;
 		long startTime, finalTime, size, newSize;
 		String filename = args[0];
+		BufferedReader readFile;
+		ObjectOutputStream compFile;
+		PrintWriter logFile;
+		String input;
 
 		do 
 		{
@@ -25,58 +29,52 @@ public class Compress
 				try
 				{
 					//open connection to file for reading
-					BufferedReader readFile = new BufferedReader(new FileReader(filename));
+					readFile = new BufferedReader(new FileReader(filename));
 					
 					//create compressed file and log file
-					ObjectOutputStream compFile = new ObjectOutputStream(new FileOutputStream(filename + ".zzz");
-					PrintWriter logFile = new PrintWriter(new FileWriter(filename + ".zzz.log"));
+					compFile = new ObjectOutputStream(new FileOutputStream(filename + ".zzz"));
+					logFile = new PrintWriter(new FileWriter(filename + ".zzz.log"));
 
 					badinput = false;
-				}
-				catch(IOException e)
-				{
-					badinput = true;
-					System.out.println(e.getMessage());
-					System.out.println("Enter proper filename");
-					filename = sc.nextLine();
-				}	
-			}
-			while(badinput);
 											
-			//start timer
-			startTime = System.currentTimeMillis(); 
-				//if doesnt work use System.nanoTime()
+					//start timer
+					startTime = System.currentTimeMillis(); 
+				    //if doesnt work use System.nanoTime()
 
 			// get size of OG file
-			size = filename.length();
+			File file = new File(filename);
+			size = file.length();
 			
-			//TODO compress file
 			//hash table object
-			HashTableChain<String, Integer> dict = new HashTableChain<String, Integer>;
+			HashTableChain<String, Integer> dict = new HashTableChain<String, Integer>();
 
 			//loop through and add common ASCII chars
 			int count=0;
-			for(i=32; i<127; i++)
+			for(int i=32; i<127; i++)
 			{
 				dict.put(Character.toString(i), count);
 				count++;
 			}
 
-			//TODO add /n, /r, and /t characters
-
+			//add /n, /r, and /t characters
+			dict.put("/n", count++);
+			dict.put("/r", count++);
+			dict.put("/t", count++);
+			
 			//loop through the file to compress
 			//String toCompress = "";
 			//String line;
 			String prefix = "";
-			char character;
-			int value;
-			while(character = readFile.nextChar() != null)
+			int character = readFile.read();
+			int value = 0;
+			
+			while(character != -1)
 			{
-				prefix += character;
+				prefix += String.valueOf(character);
 				//if prefix is in dict
 				if(dict.get(prefix) != null) 
 				{
-					prefix += readFile.nextChar();
+					prefix += String.valueOf(readFile.read());
 					value = dict.get(prefix);
 				}
 				else if (dict.get(prefix) == null)
@@ -84,8 +82,9 @@ public class Compress
 					dict.put(prefix, count);
 					count++;
 					//add the next smallest prefix value to compress file
-					compFile.writeInt(value); //TODO will this write a binary number to it or do we need to convert it to a binary num??
+					compFile.writeInt(value);
 				}
+				character = readFile.read();
 			}
 
 			logFile.println("Compression of " + filename);
@@ -94,7 +93,8 @@ public class Compress
 			finalTime = System.currentTimeMillis() - startTime;
 
 			//get size of NEW file
-			newSize = compFile.length();
+			File newFile = new File(filename + ".zzz");
+			newSize = newFile.length();
 
 			//write to log file
 			logFile.println("Compressed from " + size + " to " + size);
@@ -102,7 +102,26 @@ public class Compress
 			//TODO: logFile.println("The dictionary contains " + *** + "total
 			//entries");
 			//logFile.println("The table was rehashed " + *** + " times");
-	
+
+			//close file connections
+			readFile.close();
+			compFile.close();
+			logFile.close();
+
+  }//end try
+  				catch(FileNotFoundException e)
+				{
+					System.out.println("Cannot find file. Please enter a proper filename.");
+                    badinput = true;
+                    filename = sc.nextLine();
+				}
+                catch(IOException e)
+                {
+                    System.out.println(e.getMessage());
+                	System.exit(1);
+				}   
+            }   
+            while(badinput);	
 			//ask user for rerun
 			System.out.println("Do you want to compress another file? (y or n)");
 			input = sc.nextLine();
