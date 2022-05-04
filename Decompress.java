@@ -59,7 +59,9 @@
                   count++;
               }
   
-              //loop through the file to decompress
+              //TODO add /n, /r, /t 
+
+			  //loop through the file to decompress
 			  //output the text that corresponds with the first code
 			  //String q = dict[binaryFile.nextInt()];
 			  int q = binaryFile.nextInt();

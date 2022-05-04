@@ -61,6 +61,9 @@ public class Compress
 				dict.put(Character.toString(i), count);
 				count++;
 			}
+
+			//TODO add /n, /r, and /t characters
+
 			//loop through the file to compress
 			//String toCompress = "";
 			//String line;
