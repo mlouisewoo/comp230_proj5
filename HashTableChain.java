@@ -2,6 +2,9 @@
  * Authors: Cassidy Spencer and Madeleine Woo
  * Date: 4/25/2022
  */
+
+import java.util.*;
+
 public class HashTableChain <K,V> implements KWHashMap<K,V>
 {	
 	public static class Entry<K, V>
@@ -54,10 +57,10 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
         }
 	}	
 	  //************************************************************************
-    private LinkedList<Entry<K,V>>[]table;
+    private LinkedList<Entry<K,V>>[] table;
     private int numKeys;
-    private static final int CAPACITY = TDA;
-    private static final double LOAD_THRESHOLD = TDA;
+    private static final int CAPACITY = 571;
+    private static final double LOAD_THRESHOLD = .75;
 
     public HashTableChain()
     {
@@ -85,7 +88,7 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
         return nextItem.getValue();
       }
       
-	  return null
+	  return null;
 	}
 	
 	/*return true if table contains no key-value mappings*/
@@ -108,15 +111,15 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 	 * @return The old value associated with existing key;
 	 * otherwise, null
 	 */
-	public V put(K key, V Value) 
+	public V put(K key, V value) 
 	{
-		int index = key.hashCode % table.length;
+		int index = key.hashCode() % table.length;
 		if(index < 0)
 			index += table.length;
 		if(table[index] == null)
 		{
 			//create new linked list at table[index]
-			table[index] = newLinkedList<>();
+			table[index] = new LinkedList<Entry<K,V>>();
 		}
 
 		//search the list at table[index] to find the key
@@ -136,11 +139,54 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 		table[index].addFirst(new Entry<>(key, value));
 		numKeys++;
 		if (numKeys > (LOAD_THRESHOLD * table.length))
-			rehash(); //TODO Rehash method? UGGH
+			rehash();
 		return null;
 	}
+	public int size()
+	{
+		int count = 0;
+		for(int i=0; i<table.length; i++){
+			for (Entry<K,V> nextItem : table[i]){
+				count++;
+			}
+		}
 
-	public V remove(K key)
+		return count;
+	}
+	public int hashCode(K key)
+	{
+		return Integer.valueOf((String)key);
+		//TODO: implement hashCode()
+	}
+	public void rehash()
+	{
+		/* 1. allocate a new hash table with 2xcapacity
+		 * 2. reinsert each old table entry that has not been deleted into the
+		 * hash table
+		 * 3. reference the new table instead of the original
+		 */ 
+    	
+		//save temp table 
+		LinkedList<Entry<K,V>>[] oldTable = table;
+		table = new LinkedList[2 * oldTable.length + 1];
+
+		//Reinsert items from oldTable
+		for(int i=0; i<oldTable.length; i++)
+		{
+			if(oldTable[i] != null)
+			{
+				for(Entry<K,V> nextItem : table[i])
+				{
+					put(nextItem.getKey(), nextItem.getValue());
+				}
+			}
+		}
+
+	}
+	public V remove(Object key)
+	{	return null;	}
+
+	/*public V remove(K key)
 	{
 		int index = key.hasCode() % table.length;
 		if(index < 0)
@@ -164,5 +210,7 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 			}
 			return null;
 		}
+
+	}*/
 }
 

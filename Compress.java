@@ -57,8 +57,10 @@ public class Compress
 			//loop through and add common ASCII chars
 			int count=0;
 			for(i=32; i<127; i++)
+			{
 				dict.put(Character.toString(i), count);
-
+				count++;
+			}
 			//loop through the file to compress
 			//String toCompress = "";
 			//String line;
