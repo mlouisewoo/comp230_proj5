@@ -57,46 +57,48 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
         }
 	}	
 	  //************************************************************************
-    private LinkedList<Entry<K,V>>[] table;
-    private int numKeys;
-    private static final int CAPACITY = 571;
-    private static final double LOAD_THRESHOLD = .75;
+	    private LinkedList<Entry<K,V>>[] table;
+	    private int numKeys;
+	    private static final int CAPACITY = 571;
+	    private static final double LOAD_THRESHOLD = .75;
 
-    public HashTableChain()
-    {
-      table = new LinkedList[CAPACITY];
-      numKeys = 0;
-    }
-
-    public HashTableChain(int cap)
-    {
-      table = new LinkedList[cap];
-      numKeys = 0;
-    }
-
-    public V get(Object key)
-    {
-      int index = key.hashCode() % table.length;
-      if(index<0)
-        index += table.length;
-      if(table[index] == null)
-        return null;
-        
-      for(Entry<K,V> nextItem:table[index])
-      {
-        if(nextItem.getKey().equals(key))
-        return nextItem.getValue();
-      }
-      
-	  return null;
+	//Consrtuctor methods
+	public HashTableChain()
+	{
+		table = new LinkedList[CAPACITY];
+		numKeys = 0;
 	}
 	
+	public HashTableChain(int cap)
+	{
+		table = new LinkedList[cap];
+	        numKeys = 0;
+	}
+
+	//get value for a specific key
+	public V get(Object key)
+	{
+	      int index = key.hashCode() % table.length;
+	      if(index<0)
+		index += table.length;
+	      if(table[index] == null)
+		return null;
+
+	      for(Entry<K,V> nextItem:table[index])
+	      {
+		if(nextItem.getKey().equals(key))
+		return nextItem.getValue();
+	      }
+
+		return null;
+	}
+
 	/*return true if table contains no key-value mappings*/
 	public boolean isEmpty()
 	{
 		if(numKeys == 0)
 			return true;
-		else
+		else				
 			return false;
 	}
 
@@ -128,7 +130,7 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 			//if the search is successful, replace the old value
 			if (nextItem.getKey().equals(key))
 			{
-				//replace value with this key
+			//replace value with this key
 				V oldVal = nextItem.getValue();
 				nextItem.setValue(value);
 				return oldVal;
@@ -140,26 +142,24 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 		numKeys++;
 		if (numKeys > (LOAD_THRESHOLD * table.length))
 			rehash();
-		return null;
-	}
+			return null;
+		}
+	
 	public int size()
 	{
-		int count = 0;
+		/*int count = 0;
 		for(int i=0; i<table.length; i++){
 			for (Entry<K,V> nextItem : table[i]){
-				count++;
+					count++;
+				}
 			}
-		}
 
-		return count;
+			return count;
+		}*/
+		return numKeys;
 	}
-	
-	/*public int hashCode(K key)
-	{
-		return Integer.valueOf((String)key);
-		//TODO: implement hashCode()
-	}*/
 
+	//rehash method
 	public void rehash()
 	{
 		/* 1. allocate a new hash table with 2xcapacity
@@ -167,52 +167,51 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 		 * hash table
 		 * 3. reference the new table instead of the original
 		 */ 
-    	
+
 		//save temp table 
 		LinkedList<Entry<K,V>>[] oldTable = table;
 		table = new LinkedList[2 * oldTable.length + 1];
 
 		//Reinsert items from oldTable
-		for(int i=0; i<oldTable.length; i++)
-		{
-			if(oldTable[i] != null)
-			{
-				for(Entry<K,V> nextItem : table[i])
-				{
+		for(int i=0; i<oldTable.length; i++){
+			if(oldTable[i] != null){
+				for(Entry<K,V> nextItem : table[i]){
 					put(nextItem.getKey(), nextItem.getValue());
 				}
 			}
 		}
 
 	}
+	
+	//remove method
 	public V remove(Object key)
 	{	return null;	}
 
-	/*public V remove(K key)
-	{
-		int index = key.hasCode() % table.length;
-		if(index < 0)
-			index += table.length;
-		
-		//key is not in the table
-		if(table[index] == null)
-			return null;
-		
-		//search the list at table[index] to find the key
-		for (Entry<K, V> nextItem : table[index])
+		/*public V remove(K key)
 		{
-			//if we find the key, remove the entry
-			if (nextItem.getKey().equals(key))
-			{	
-				table[index].remove(nextItem);
-				numKeys--;
-				if(table[index].size == 0) //TODO trying to see if list is empty
-					table[index] = null;
-				return value; //TODO return value associated with the key 
-			}
-			return null;
-		}
+			int index = key.hasCode() % table.length;
+			if(index < 0)
+				index += table.length;
 
-	}*/
+			//key is not in the table
+			if(table[index] == null)
+				return null;
+
+			//search the list at table[index] to find the key
+			for (Entry<K, V> nextItem : table[index])
+			{
+				//if we find the key, remove the entry
+				if (nextItem.getKey().equals(key))
+				{	
+					table[index].remove(nextItem);
+					numKeys--;
+					if(table[index].size == 0) //TODO trying to see if list is empty
+						table[index] = null;
+					return value; //TODO return value associated with the key 
+				}
+				return null;
+			}
+
+		}*/
 }
 
