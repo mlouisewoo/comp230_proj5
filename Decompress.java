@@ -48,8 +48,8 @@
   
               //TODO decompress file
               //list for dict
-              ArrayList<Entry<String,Integer>> dict = new ArrayList<Entry<String,Integer>>;
-  
+              ArrayList<String> dict = new ArrayList<String>;
+ 			   
               //loop through and add common ASCII chars
               int count=0;
               for(i=32; i<127; i++)
@@ -59,25 +59,42 @@
                   count++;
               }
   
-              //loop through the file to compress
-              //for all other codes p in the compressed file:
-              //  assume q is the code
-              //  procedes p
-              //  for:
-              //      if p in dict
-              //          extract text(p) from dict
-              //          output text(p)
-              //          insert (next code, text(p)FC(text(p)) ) into dict
-              //      else
-              //          output text(q)FC(text(q))) into the dict
-              logFile.println("Decompression for file " + filename);
+              //loop through the file to decompress
+			  //output the text that corresponds with the first code
+			  //String q = dict[binaryFile.nextInt()];
+			  int q = binaryFile.nextInt();
+			  newFile.print(q);
+
+              while(int p = binaryFile.nextInt() != null)
+			  {  
+				  //if p is in dict
+				  if(dict.length >  p)
+				  {
+			  		  String pstring = dict[p];
+					  newFile.print(pstring);
+					  dict.add(dict[q] + pstring.substring(0,1));
+				  }
+				  //if p is not in dict
+				  else
+				  {
+					  //p = q + q.substring(0,1);
+					  String qstring = dict[q];
+					  newFile.print(qstring + qstring.substring(0,1));
+					  dict.add(qstring + qstring.substring(0,1));
+				  }
+
+				  //reassign q to p
+				  q = p;
+			  }	  	 
+              
+			  logFile.println("Decompression for file " + filename);
   
               //end timerv
               finalTime = System.currentTimeMillis() - startTime;
   
               //write to log file
               logFile.println("Decompression took " + finalTime + " milliseconds");
-              //logFile.println("The table was doubled " + *** + " times");
+              //TODO logFile.println("The table was doubled " + *** + " times");
   
               //ask user for rerun
               System.out.println("Do you want to compress another file? (y or n)");
