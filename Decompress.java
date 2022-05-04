@@ -46,9 +46,8 @@
               //start timer
               startTime = System.currentTimeMillis();
   
-              //TODO decompress file
               //list for dict
-              ArrayList<String> dict = new ArrayList<String>;
+              ArrayList<String> dict = new ArrayList<String>();
  			   
               //loop through and add common ASCII chars
               int count=0;
@@ -59,15 +58,18 @@
                   count++;
               }
   
-              //TODO add /n, /r, /t 
+			  dict.add("/n", count++);
+			  dict.add("/r", count++);
+			  dict.add("/t", count++);
 
 			  //loop through the file to decompress
 			  //output the text that corresponds with the first code
 			  //String q = dict[binaryFile.nextInt()];
-			  int q = binaryFile.nextInt();
+			  int q = binaryFile.readInt();
 			  newFile.print(q);
 
-              while(int p = binaryFile.nextInt() != null)
+              //while(int p = binaryFile.nextInt() != null)
+			  while(int p = binaryFile.read() != -1)
 			  {  
 				  //if p is in dict
 				  if(dict.length >  p)
