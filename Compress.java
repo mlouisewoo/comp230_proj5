@@ -97,7 +97,7 @@ public class Compress
 			newSize = newFile.length();
 
 			//write to log file
-			logFile.println("Compressed from " + size + " to " + size);
+			logFile.println("Compressed from " + size + " to " + newSize);
 			logFile.println("Compression took " + finalTime + " milliseconds");
 			//TODO: logFile.println("The dictionary contains " + *** + "total
 			//entries");
