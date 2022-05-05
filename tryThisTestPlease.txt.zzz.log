@@ -1,5 +1,3 @@
-Compression of tryThisTestPlease.txt
-Compressed from 1779 to 2063
-Compression took 76 milliseconds
-The dictionary contains 1639total entries
-The table was rehashed 2 times
+Decompression for file tryThisTestPlease.txt.zzz
+Decompression took 36 milliseconds
+The table was doubled 2 times
