@@ -65,7 +65,7 @@ public class Compress
 					//loop through the file to compress
 					//TODO: change prefix to something else
 					String[] prefix = new String[1];
-					
+					prefix[0] = "";
 					//String prefix = "";
 					int character = readFile.read();
 					int value = 0;
@@ -73,6 +73,7 @@ public class Compress
 					while(character != -1)
 					{
 						prefix[0] += Character.toString((char)character);
+						System.out.println("Line 77 prefix = "+prefix[0]);
 						//if prefix is in dict
 						if(dict.get(prefix[0]) != null) 
 						{
@@ -80,7 +81,7 @@ public class Compress
 							//prefix += (char)readFile.read();
 							value = dict.get(prefix[0]);
 							//System.out.print("value: " + value);
-							System.out.print(prefix[0]+" ");
+						//	System.out.print(prefix[0]+" ");
 						}
 						else if (dict.get(prefix[0]) == null)
 						{
