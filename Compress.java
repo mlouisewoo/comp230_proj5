@@ -58,9 +58,9 @@ public class Compress
 					}
 
 					//add /n, /r, and /t characters
-					dict.put("/n", count++);
-					dict.put("/r", count++);
-					dict.put("/t", count++);
+					dict.put("\n", count++);
+					dict.put("\r", count++);
+					dict.put("\t", count++);
 
 					//loop through the file to compress
 					//TODO: change prefix to something else
@@ -80,16 +80,18 @@ public class Compress
 							//compFile.writeInt(dict.get(prefix));
 							//prefix += (char)readFile.read();
 							value = dict.get(prefix[0]);
-							//System.out.println("value for "+prefix[0] + " : " + value);
+							System.out.println("value for "+prefix[0] + " : " + value);
 						//	System.out.print(prefix[0]+" ");
 							character = readFile.read();
+							System.out.println("new character: "+ Character.toString((char)character) 
+													+ "("+character+")");
 							prefix[0] += Character.toString((char)character);
 						}
 						else if (dict.get(prefix[0]) == null)
 						{
 							dict.put(prefix[0], count);
 							//add the next smallest prefix value to compress file
-							//System.out.println("putting " + prefix[0] + " at " + count);
+							System.out.println("putting " + prefix[0] + " at " + count);
 							System.out.println("writing " + value);
 							count++;
 							compFile.writeInt(value);	
@@ -112,7 +114,7 @@ public class Compress
 					logFile.println("Compressed from " + size + " to " + newSize);
 					logFile.println("Compression took " + finalTime + " milliseconds");
 					logFile.println("The dictionary contains " + dict.size() + "total entries");
-					logFile.println("The table was rehashed " + dict.timesRehashed() + " times");
+					logFile.println("The table was rehashed " + dict.getTimesRehashed() + " times");
 
 					//close file connections
 					readFile.close();

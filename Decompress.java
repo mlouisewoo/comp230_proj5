@@ -50,9 +50,9 @@ public class Decompress
 						count++;
               		}
   
-			  		dict[count++] = "/n";
-			  		dict[count++] = "/r";
-			  		dict[count++] = "/t";
+			  		dict[count++] = "\n";
+			  		dict[count++] = "\r";
+			  		dict[count++] = "\t";
 
 			  		//loop through the file to decompress
 			  		//output the text that corresponds with the first code
