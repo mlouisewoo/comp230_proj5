@@ -69,30 +69,34 @@ public class Compress
 					//String prefix = "";
 					int character = readFile.read();
 					int value = 0;
-
+					prefix[0] += Character.toString((char)character);
 					while(character != -1)
 					{
-						prefix[0] += Character.toString((char)character);
-						System.out.println("Line 77 prefix = "+prefix[0]);
+						//prefix[0] += Character.toString((char)character);
+						//System.out.println("Line 77 prefix = "+prefix[0]);
 						//if prefix is in dict
 						if(dict.get(prefix[0]) != null) 
 						{
 							//compFile.writeInt(dict.get(prefix));
 							//prefix += (char)readFile.read();
 							value = dict.get(prefix[0]);
-							//System.out.print("value: " + value);
+							System.out.println("value for "+prefix[0] + " : " + value);
 						//	System.out.print(prefix[0]+" ");
+							character = readFile.read();
+							prefix[0] += Character.toString((char)character);
 						}
 						else if (dict.get(prefix[0]) == null)
 						{
 							dict.put(prefix[0], count);
-							count++;
 							//add the next smallest prefix value to compress file
-							//System.out.print(value + " ");
-							compFile.writeInt(value);
-							prefix[0] = "";
+							System.out.println("putting " + prefix[0] + " at " + count);
+							System.out.println("writing " + value);
+							count++;
+							compFile.writeInt(value);	
+							String temp = prefix[0];
+							prefix[0] = temp.charAt(temp.length()-1) + "";
 						}
-						character = readFile.read();
+						//character = readFile.read();
 					}
 
 					logFile.println("Compression of " + filename);
