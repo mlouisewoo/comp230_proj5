@@ -25,7 +25,7 @@ public class Decompress
                 {
 					//open connection to file for reading
 					ObjectInputStream binaryFile = new ObjectInputStream(new FileInputStream(filename));
-  
+					 
                     //create decompressed file and log file
                     String newFile = filename.substring(0,filename.length() - 4);
                     PrintWriter output = new PrintWriter(new FileWriter(newFile));
@@ -57,7 +57,7 @@ public class Decompress
 			  		//output the text that corresponds with the first code
 			  		//String q = dict[binaryFile.nextInt()];
 			  		int q = binaryFile.readInt();
-					System.out.println(q);
+					System.out.println("\n" + q);
 			  		output.print(dict[q]);
 	
 			        //read through binary file and apply decompression algorithm
@@ -69,12 +69,13 @@ public class Decompress
 							if(count>dict.length)
 								dict = doubleList(dict);  
 							//if p is in dict
-							if(dict.length >  p)
+							if(dict[p] != null)
 							{
 								  //String pstring = dict[p];
 								  String pstring = dict[p];
 								  output.print(pstring);
 								  dict[count] = dict[q] + pstring.substring(0,1);
+								  System.out.println("At 79: count = "+count+" q = "+q);
 								  count++;
 							}
 							//if p is not in dict
