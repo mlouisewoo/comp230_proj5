@@ -57,14 +57,17 @@ public class Decompress
 			  		//output the text that corresponds with the first code
 			  		//String q = dict[binaryFile.nextInt()];
 			  		int q = binaryFile.readInt();
-			  		output.print(q);
+					System.out.println(q);
+			  		output.print(dict[q]);
 	
 			        //read through binary file and apply decompression algorithm
 					try
 					{	
 						int p = binaryFile.readInt();
 						while(p != -1)
-						{  
+						{
+							if(count>dict.length)
+								dict = doubleList(dict);  
 							//if p is in dict
 							if(dict.length >  p)
 							{
@@ -145,5 +148,22 @@ public class Decompress
             	rerun = false;
 		}
        	while(rerun);
+	}
+	public static String[] doubleList(String[] list)
+	{
+		//declare list with 2times capacity
+		int size = list.length;
+		String[] newList = new String[size*2];
+		
+		for(int i=0; i<size; i++)
+		{
+			newList[i] = list[i];
+		}
+		return newList;
+
+
+
+
+
 	}
 } 

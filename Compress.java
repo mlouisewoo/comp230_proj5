@@ -64,25 +64,29 @@ public class Compress
 					//loop through the file to compress
 					//String toCompress = "";
 					//String line;
-					String prefix = "";
+					//TODO: change prefix to something else
+					String[] prefix = new String[1];
 					int character = readFile.read();
 					int value = 0;
 
 					while(character != -1)
 					{
-						prefix += Character.toString((char)character);
+						prefix[0] += Character.toString((char)character);
 						//if prefix is in dict
-						if(dict.get(prefix) != null) 
+						if(dict.get(prefix[0]) != null) 
 						{
-							prefix += Character.toString((char)readFile.read());
-							value = dict.get(prefix);
+							//compFile.writeInt(dict.get(prefix));
+							//prefix += (char)readFile.read();
+							value = dict.get(prefix[0]);
+
 						}
-						else if (dict.get(prefix) == null)
+						else if (dict.get(prefix[0]) == null)
 						{
-							dict.put(prefix, count);
+							dict.put(prefix[0], count);
 							count++;
 							//add the next smallest prefix value to compress file
 							compFile.writeInt(value);
+							prefix[0] = "";
 						}
 						character = readFile.read();
 					}
