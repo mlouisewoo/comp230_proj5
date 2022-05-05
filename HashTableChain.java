@@ -183,9 +183,46 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 
 	}
 	
-	//remove method
 	public V remove(Object key)
-	{	return null;	}
+	{ return null; }	
+	//remove method
+	/*	public V remove(Object key)
+		{	
+			K key = (K)key;
+			int index = key.hasCode() % table.length;
+			if(index < 0)
+				index += table.length;
+			//key is not in the table
+			if(table[index] == null)
+				return null;
+			
+			Entry<K, V> current = table[index].head;
+			
+			if (current.getKey().equals(key)) 
+			{
+				table[index].head = current.next;
+				if (table[index].size == 0)
+				{
+					//DELETED?
+					table[index] = null;
+				}	
+				numKeys--;
+			}
+			else
+			{
+				while (current.hasNext())
+				{
+					if (current.next.getKey().equals(key))
+					{
+						current.next = current.next.next;
+						numkeys--;
+						return current.next.getValue();
+					}
+					current = current.next;
+				}
+			}
+
+		}*/
 
 		/*public V remove(K key)
 		{
