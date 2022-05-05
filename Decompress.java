@@ -62,12 +62,14 @@ public class Decompress
 			        //read through binary file and apply decompression algorithm
 					try
 					{	
-						while(int p = binaryFile.readInt() != -1)
+						int p = binaryFile.readInt();
+						while(p != -1)
 						{  
 							//if p is in dict
 							if(dict.length >  p)
 							{
-								  String pstring = dict[p];
+								  //String pstring = dict[p];
+								  String pstring = dict.get(p);
 								  newFile.print(pstring);
 								  dict.add(dict[q] + pstring.substring(0,1));
 							}
@@ -82,6 +84,7 @@ public class Decompress
 
 							//reassign q to p
 							q = p;
+							p = binaryFile.readInt();
 						}	  	 
 					}//end try
 					catch(EOFException e)
@@ -99,6 +102,7 @@ public class Decompress
               		//TODO logFile.println("The table was doubled " + *** + " times");
   					
 					//TODO close file connections
+					
 				}//end try
 				catch(FileNotFoundException e)
 				{
