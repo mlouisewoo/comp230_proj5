@@ -13,9 +13,10 @@ public class Decompress
 		//Declare variables
 		Boolean rerun = false;
           	Scanner sc = new Scanner(System.in);
-          	long startTime, finalTime, doubled;
+          	long startTime, finalTime;
           	String filename = args[0];
-			String input = "";	
+			String input = "";
+			int doubled = 0;	
 		do
 		{
 			Boolean badinput = false;
@@ -67,7 +68,9 @@ public class Decompress
 						while(p != -1)
 						{
 							if(count>dict.length)
-								dict = doubleList(dict);  
+							{	dict = doubleList(dict);  
+								doubled++;
+							}
 							//if p is in dict
 							if(dict[p] != null)
 							{
@@ -105,9 +108,9 @@ public class Decompress
   
 			        //write to log file
               		logFile.println("Decompression took " + finalTime + " milliseconds");
-              		//TODO logFile.println("The table was doubled " + *** + " times");
+              		logFile.println("The table was doubled " + doubled + " times");
   					
-					//TODO close file connections
+					//close file connections
 					output.close();
 					logFile.close();
 					binaryFile.close();
