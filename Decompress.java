@@ -30,7 +30,7 @@ public class Decompress
                     //create decompressed file and log file
                     String newFile = filename.substring(0,filename.length() - 4);
                     PrintWriter output = new PrintWriter(new FileWriter(newFile));
-                    PrintWriter logFile = new PrintWriter(new FileWriter(newFile + ".log"));
+                    PrintWriter logFile = new PrintWriter(new FileWriter(filename + ".log"));
   
           			badinput = false;
                   
