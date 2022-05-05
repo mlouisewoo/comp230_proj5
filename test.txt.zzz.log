@@ -1,4 +1,4 @@
 Compression of test.txt
-Compressed from 33 to 4
-Compression took 17 milliseconds
-The dictionary contains 111total entries
+Compressed from 17 to 4
+Compression took 18 milliseconds
+The dictionary contains 106total entries

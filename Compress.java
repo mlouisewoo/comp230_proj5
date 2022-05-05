@@ -33,6 +33,7 @@ public class Compress
 					
 					//create compressed file and log file
 					compFile = new ObjectOutputStream(new FileOutputStream(filename + ".zzz"));
+					compFile.reset();
 					logFile = new PrintWriter(new FileWriter(filename + ".zzz.log"));
 
 					badinput = false;
@@ -62,10 +63,10 @@ public class Compress
 					dict.put("/t", count++);
 
 					//loop through the file to compress
-					//String toCompress = "";
-					//String line;
 					//TODO: change prefix to something else
 					String[] prefix = new String[1];
+					
+					//String prefix = "";
 					int character = readFile.read();
 					int value = 0;
 
@@ -78,13 +79,15 @@ public class Compress
 							//compFile.writeInt(dict.get(prefix));
 							//prefix += (char)readFile.read();
 							value = dict.get(prefix[0]);
-
+							//System.out.print("value: " + value);
+							System.out.print(prefix[0]+" ");
 						}
 						else if (dict.get(prefix[0]) == null)
 						{
 							dict.put(prefix[0], count);
 							count++;
 							//add the next smallest prefix value to compress file
+							//System.out.print(value + " ");
 							compFile.writeInt(value);
 							prefix[0] = "";
 						}
