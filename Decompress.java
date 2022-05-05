@@ -17,37 +17,37 @@ public class Decompress
           	String filename = args[0];
 		
 		do
-          	{
+		{
 			Boolean badinput = false;
 			do
 			{
-                  		try
-                  		{
+				try
+                {
 					//open connection to file for reading
-             				ObjectInputStream binaryFile = new ObjectInputStream(new FileInputStream(filename));
+					ObjectInputStream binaryFile = new ObjectInputStream(new FileInputStream(filename));
   
-                      			//create decompressed file and log file
-                      			String newFile = filename.substring(0,filename.length() - 4);
-                      			PrintWriter output = new PrintWriter(new FileWriter(newFile));
-                      			PrintWriter logFile = new PrintWriter(new FileWriter(newFile + ".log"));
+                    //create decompressed file and log file
+                    String newFile = filename.substring(0,filename.length() - 4);
+                    PrintWriter output = new PrintWriter(new FileWriter(newFile));
+                    PrintWriter logFile = new PrintWriter(new FileWriter(newFile + ".log"));
   
-                      			badinput = false;
+          			badinput = false;
                   
  
-              				//start timer
-             	 			startTime = System.currentTimeMillis();
+              		//start timer
+             	 	startTime = System.currentTimeMillis();
   
-              				//list for dict
-              				ArrayList<String> dict = new ArrayList<String>();
+              		//list for dict
+              		ArrayList<String> dict = new ArrayList<String>();
  			   
-              				//loop through and add common ASCII chars
-              				int count=0;
-              				for(i=32; i<127; i++)
-              				{
-                  				Entry<String,Integer> e = new Entry<String,Integer>(Character.toString(i),count);
-                  				dict.add(e);
-                  				count++;
-              				}
+          			//loop through and add common ASCII chars
+       				int count=0;
+              		for(i=32; i<127; i++)
+              		{
+                  		Entry<String,Integer> e = new Entry<String,Integer>(Character.toString(i),count);
+                  		dict.add(e);
+                  		count++;
+              		}
   
 			  		dict.add("/n", count++);
 			  		dict.add("/r", count++);
@@ -59,7 +59,7 @@ public class Decompress
 			  		int q = binaryFile.readInt();
 			  		newFile.print(q);
 	
-			                //read through binary file and apply decompression algorithm
+			        //read through binary file and apply decompression algorithm
 					try
 					{	
 						while(int p = binaryFile.readInt() != -1)
@@ -91,12 +91,12 @@ public class Decompress
 					
 			  		logFile.println("Decompression for file " + filename);
   
-              				//end timer
-              				finalTime = System.currentTimeMillis() - startTime;
+              		//end timer
+              		finalTime = System.currentTimeMillis() - startTime;
   
-			                //write to log file
-              				logFile.println("Decompression took " + finalTime + " milliseconds");
-              				//TODO logFile.println("The table was doubled " + *** + " times");
+			        //write to log file
+              		logFile.println("Decompression took " + finalTime + " milliseconds");
+              		//TODO logFile.println("The table was doubled " + *** + " times");
   					
 					//TODO close file connections
 				}//end try
@@ -106,35 +106,35 @@ public class Decompress
 					badinput = true;
 					filename = sc.nextLine();
 				}
-                  		catch(IOException e)
+                catch(IOException e)
 				{
-                      			System.out.println(e.getMessage());
+                    System.out.println(e.getMessage());
 					System.exit(1);
-                  		}
-              		}
-              		while(badinput);
+                }
+ 			}
+            while(badinput);
 		  
-              		//ask user for rerun
-              		System.out.println("Do you want to compress another file? (y or n)");
-              		input = sc.nextLine();
+            //ask user for rerun
+            System.out.println("Do you want to compress another file? (y or n)");
+            input = sc.nextLine();
   
 			//validation    
 			while(!input.equalsIgnoreCase("y") && !input.equalsIgnoreCase("n"))
-		        {
+		    {
 				System.out.println("INCORRECT!!! Please put y or n.");
 				input = sc.nextLine();
-		        }
+		    }
 			
 			//check for rerun
-              		if(input.equalsIgnoreCase("y"))
-              		{
-                  		rerun = true;
-                  		System.out.println("\nEnter the new file name: ");
-                  		filename = sc.nextLine();
-              		}
-             		else
-                 		rerun = false;
-         	}
-         	while(rerun);
+            if(input.equalsIgnoreCase("y"))
+            {
+				rerun = true;
+				System.out.println("\nEnter the new file name: ");
+                filename = sc.nextLine();
+			}
+            else
+            	rerun = false;
+		}
+       	while(rerun);
 	}
 } 
