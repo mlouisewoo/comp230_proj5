@@ -183,20 +183,23 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 
 	}
 	
-	public V remove(Object key)
-	{ return null; }	
+	/*public V remove(Object key)
+	{ return null; }	*/
 	//remove method
-	/*	public V remove(Object key)
+		/*public V remove(Object key)
 		{	
 			K key = (K)key;
 			int index = key.hasCode() % table.length;
 			if(index < 0)
 				index += table.length;
+	
 			//key is not in the table
 			if(table[index] == null)
 				return null;
 			
-			Entry<K, V> current = table[index].head;
+			//Entry<K, V> current = table[index].head;
+			ListIterator<Entry<K, V>> iter = table[index].iterator();
+			
 			
 			if (current.getKey().equals(key)) 
 			{
@@ -210,7 +213,8 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 			}
 			else
 			{
-				while (current.hasNext())
+				while(iter.hasNext())
+				//while (current.hasNext())
 				{
 					if (current.next.getKey().equals(key))
 					{
@@ -224,9 +228,9 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 
 		}*/
 
-		/*public V remove(K key)
+		public V remove(Object key)
 		{
-			int index = key.hasCode() % table.length;
+			int index = key.hashCode() % table.length;
 			if(index < 0)
 				index += table.length;
 
@@ -235,20 +239,22 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 				return null;
 
 			//search the list at table[index] to find the key
+		
 			for (Entry<K, V> nextItem : table[index])
 			{
 				//if we find the key, remove the entry
 				if (nextItem.getKey().equals(key))
 				{	
+					V value = nextItem.getValue();
 					table[index].remove(nextItem);
 					numKeys--;
-					if(table[index].size == 0) //TODO trying to see if list is empty
+					if(table[index].size() == 0) //TODO trying to see if list is empty
 						table[index] = null;
 					return value; //TODO return value associated with the key 
 				}
-				return null;
 			}
+			return null;
 
-		}*/
+		}
 }
 
