@@ -67,7 +67,7 @@ public class Decompress
 						int p = binaryFile.readInt();
 						while(p != -1)
 						{
-							if(count>dict.length)
+							if(count>=dict.length)
 							{	dict = doubleList(dict);  
 								doubled++;
 							}

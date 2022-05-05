@@ -1,4 +1,5 @@
 Compression of test.txt
 Compressed from 17 to 5
-Compression took 23 milliseconds
-The dictionary contains 106total entries
+Compression took 1 milliseconds
+The dictionary contains 105total entries
+The table was rehashed 0 times

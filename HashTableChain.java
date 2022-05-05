@@ -176,11 +176,12 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 		//Reinsert items from oldTable
 		for(int i=0; i<oldTable.length; i++){
 			if(oldTable[i] != null){
-				for(Entry<K,V> nextItem : table[i]){
+				for(Entry<K,V> nextItem : oldTable[i]){
 					put(nextItem.getKey(), nextItem.getValue());
 				}
 			}
 		}
+		timesRehashed++;
 
 	}
 	//accessor method for timesRehahsed
