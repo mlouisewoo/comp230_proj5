@@ -52,7 +52,7 @@ public class Compress
 					int count=0;
 					for(int i=32; i<127; i++)
 					{
-						dict.put(Character.toString(i), count);
+						dict.put(Character.toString((char)i), count);
 						count++;
 					}
 
@@ -70,11 +70,11 @@ public class Compress
 
 					while(character != -1)
 					{
-						prefix += String.valueOf(character);
+						prefix += Character.toString((char)character);
 						//if prefix is in dict
 						if(dict.get(prefix) != null) 
 						{
-							prefix += String.valueOf(readFile.read());
+							prefix += Character.toString((char)readFile.read());
 							value = dict.get(prefix);
 						}
 						else if (dict.get(prefix) == null)

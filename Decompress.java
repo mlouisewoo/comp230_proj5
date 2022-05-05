@@ -15,7 +15,7 @@ public class Decompress
           	Scanner sc = new Scanner(System.in);
           	long startTime, finalTime, doubled;
           	String filename = args[0];
-		
+			String input = "";	
 		do
 		{
 			Boolean badinput = false;
@@ -38,26 +38,26 @@ public class Decompress
              	 	startTime = System.currentTimeMillis();
   
               		//list for dict
-              		ArrayList<String> dict = new ArrayList<String>();
+              		String[] dict = new String[300];
  			   
           			//loop through and add common ASCII chars
        				int count=0;
-              		for(i=32; i<127; i++)
+              		for(int i=32; i<127; i++)
               		{
-                  		Entry<String,Integer> e = new Entry<String,Integer>(Character.toString(i),count);
-                  		dict.add(e);
-                  		count++;
+                  		dict[count] = Character.toString((char)i);
+                  		System.out.print(dict[count] + " ");
+						count++;
               		}
   
-			  		dict.add("/n", count++);
-			  		dict.add("/r", count++);
-			  		dict.add("/t", count++);
+			  		dict[count++] = "/n";
+			  		dict[count++] = "/r";
+			  		dict[count++] = "/t";
 
 			  		//loop through the file to decompress
 			  		//output the text that corresponds with the first code
 			  		//String q = dict[binaryFile.nextInt()];
 			  		int q = binaryFile.readInt();
-			  		newFile.print(q);
+			  		output.print(q);
 	
 			        //read through binary file and apply decompression algorithm
 					try
@@ -69,17 +69,19 @@ public class Decompress
 							if(dict.length >  p)
 							{
 								  //String pstring = dict[p];
-								  String pstring = dict.get(p);
-								  newFile.print(pstring);
-								  dict.add(dict[q] + pstring.substring(0,1));
+								  String pstring = dict[p];
+								  output.print(pstring);
+								  dict[count] = dict[q] + pstring.substring(0,1);
+								  count++;
 							}
 							//if p is not in dict
 							else
 							{
 								//p = q + q.substring(0,1);
 								String qstring = dict[q];
-								newFile.print(qstring + qstring.substring(0,1));
-								dict.add(qstring + qstring.substring(0,1));
+								output.print(qstring + qstring.substring(0,1));
+								dict[count] = qstring + qstring.substring(0,1);
+								count++;
 							}
 
 							//reassign q to p
@@ -102,6 +104,9 @@ public class Decompress
               		//TODO logFile.println("The table was doubled " + *** + " times");
   					
 					//TODO close file connections
+					output.close();
+					logFile.close();
+					binaryFile.close();
 					
 				}//end try
 				catch(FileNotFoundException e)
