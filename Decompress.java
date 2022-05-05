@@ -90,13 +90,19 @@ public class Decompress
 			                //write to log file
               				logFile.println("Decompression took " + finalTime + " milliseconds");
               				//TODO logFile.println("The table was doubled " + *** + " times");
-  				}//end try
+  					
+					//TODO close file connections
+				}//end try
+				catch(FileNotFoundException e)
+				{
+					System.out.println("File not found. Please enter a valid filename");
+					badinput = true;
+					filename = sc.nextLine();
+				}
                   		catch(IOException e)
-                  		{
-                      			badinput = true;
+				{
                       			System.out.println(e.getMessage());
-                      			System.out.println("Enter proper filename");
-                     			filename = sc.nextLine();
+					System.exit(1);
                   		}
               		}
               		while(badinput);
