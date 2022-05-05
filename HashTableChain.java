@@ -61,7 +61,8 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 	    private int numKeys;
 	    private static final int CAPACITY = 571;
 	    private static final double LOAD_THRESHOLD = .75;
-
+		private int timesRehashed;
+	
 	//Consrtuctor methods
 	public HashTableChain()
 	{
@@ -182,6 +183,9 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 		}
 
 	}
+	//accessor method for timesRehahsed
+	public int getTimesRehashed()
+	{	return timesRehashed;	}
 	
 	/*public V remove(Object key)
 	{ return null; }	*/

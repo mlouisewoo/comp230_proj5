@@ -112,7 +112,7 @@ public class Compress
 					logFile.println("Compressed from " + size + " to " + newSize);
 					logFile.println("Compression took " + finalTime + " milliseconds");
 					logFile.println("The dictionary contains " + dict.size() + "total entries");
-					//logFile.println("The table was rehashed " + *** + " times");
+					logFile.println("The table was rehashed " + dict.timesRehashed() + " times");
 
 					//close file connections
 					readFile.close();
