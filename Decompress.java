@@ -59,29 +59,36 @@ public class Decompress
 			  		int q = binaryFile.readInt();
 			  		newFile.print(q);
 	
-			                //while(int p = binaryFile.nextInt() != null)
-			  		while(int p = binaryFile.read() != -1)
-			  		{  
-				  		//if p is in dict
-				  		if(dict.length >  p)
-				  		{
-					  		  String pstring = dict[p];
-							  newFile.print(pstring);
-							  dict.add(dict[q] + pstring.substring(0,1));
-						}
-				  		//if p is not in dict
-				  		else
-				  		{
-					  		//p = q + q.substring(0,1);
-					  		String qstring = dict[q];
-					  		newFile.print(qstring + qstring.substring(0,1));
-					  		dict.add(qstring + qstring.substring(0,1));
-				  		}
+			                //read through binary file and apply decompression algorithm
+					try
+					{	
+						while(int p = binaryFile.readInt() != -1)
+						{  
+							//if p is in dict
+							if(dict.length >  p)
+							{
+								  String pstring = dict[p];
+								  newFile.print(pstring);
+								  dict.add(dict[q] + pstring.substring(0,1));
+							}
+							//if p is not in dict
+							else
+							{
+								//p = q + q.substring(0,1);
+								String qstring = dict[q];
+								newFile.print(qstring + qstring.substring(0,1));
+								dict.add(qstring + qstring.substring(0,1));
+							}
 
-				  		//reassign q to p
-				  		q = p;
-			  		}	  	 
-              
+							//reassign q to p
+							q = p;
+						}	  	 
+					}//end try
+					catch(EOFException e)
+					{
+						System.out.println("End of reading from file");
+					}
+					
 			  		logFile.println("Decompression for file " + filename);
   
               				//end timer
