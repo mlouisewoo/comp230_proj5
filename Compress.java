@@ -105,7 +105,7 @@ public class Compress
 					//write to log file
 					logFile.println("Compressed from " + size + " to " + newSize);
 					logFile.println("Compression took " + finalTimeSeconds + " seconds");
-					logFile.println("The dictionary contains " + dict.size() + "total entries");
+					logFile.println("The dictionary contains " + dict.size() + " total entries");
 					logFile.println("The table was rehashed " + dict.getTimesRehashed() + " times");
 
 					//close file connections
