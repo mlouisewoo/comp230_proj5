@@ -96,7 +96,7 @@ public class Compress
 
 					//end timer
 					finalTime = System.currentTimeMillis() - startTime;
-					long finalTimeSeconds = finalTime/1000;
+					double finalTimeSeconds = finalTime/1000.0;
 
 					//get size of NEW file
 					File newFile = new File(filename + ".zzz");

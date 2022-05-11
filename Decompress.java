@@ -41,7 +41,7 @@ public class Decompress
              	 	startTime = System.currentTimeMillis();
   
               		//list for dict
-              		String[] dict = new String[300];
+              		String[] dict = new String[811];
  			   
           			//loop through and add common ASCII chars
        				int count=0;
@@ -107,7 +107,7 @@ public class Decompress
   
               		//end timer
               		finalTime = System.currentTimeMillis() - startTime;
-  					long finalTimeSec = finalTime/1000;
+  					double finalTimeSec = finalTime/1000.0;
 			        
 					//write to log file
               		logFile.println("Decompression took " + finalTimeSec + " seconds");
