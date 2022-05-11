@@ -1,5 +1,7 @@
-/* Summary:
-* TODO
+/* Summary: This program takes in a compressed binary coded file, and outputs
+ * the original text file. After decompressing, the program asks the user if
+ * they would like to decompress another file. It also generates a log file
+ * with information from the process.
 * Authors: Cassidy Spencer and Madeleine Woo
 * Date: 4/23/2022
 */
@@ -50,13 +52,13 @@ public class Decompress
 						count++;
               		}
   
+  					//add special characters
 			  		dict[count++] = "\n";
 			  		dict[count++] = "\r";
 			  		dict[count++] = "\t";
 
 			  		//loop through the file to decompress
 			  		//output the text that corresponds with the first code
-			  		//String q = dict[binaryFile.nextInt()];
 			  		int q = binaryFile.readInt();
 					System.out.println("\n" + q);
 			  		output.print(dict[q]);
@@ -67,6 +69,7 @@ public class Decompress
 						int p = binaryFile.readInt();
 						while(p != -1)
 						{
+							//double the list if neccessary
 							if(count>=dict.length)
 							{	dict = doubleList(dict);  
 								doubled++;
@@ -74,17 +77,18 @@ public class Decompress
 							//if p is in dict
 							if(dict[p] != null)
 							{
-								  //String pstring = dict[p];
-								  String pstring = dict[p];
-								  output.print(pstring);
-								  dict[count] = dict[q] + pstring.substring(0,1);
-								  System.out.println("At 79: count = "+count+" q = "+q);
-								  count++;
+								//output p 
+								//insert next code + first char of q into dict 
+								String pstring = dict[p];
+								output.print(pstring);
+								dict[count] = dict[q] + pstring.substring(0,1);
+								count++;
 							}
 							//if p is not in dict
 							else
 							{
-								//p = q + q.substring(0,1);
+								//output q + first char of q
+								//insert q + first char of q into the dict
 								String qstring = dict[q];
 								output.print(qstring + qstring.substring(0,1));
 								dict[count] = qstring + qstring.substring(0,1);
@@ -105,9 +109,10 @@ public class Decompress
   
               		//end timer
               		finalTime = System.currentTimeMillis() - startTime;
-  
-			        //write to log file
-              		logFile.println("Decompression took " + finalTime + " milliseconds");
+  					long finalTimeSec = finalTime/1000;
+			        
+					//write to log file
+              		logFile.println("Decompression took " + finalTimeSec + " seconds");
               		logFile.println("The table was doubled " + doubled + " times");
   					
 					//close file connections
@@ -153,6 +158,13 @@ public class Decompress
 		}
        	while(rerun);
 	}
+	/*This method will create a new list from a given list with double the
+	 * size. The original values will be copied over to the beginning of the
+	 * new list.
+	 *
+	 * @param list, the list to be doubled
+	 * @returns the new list
+	 */
 	public static String[] doubleList(String[] list)
 	{
 		//declare list with 2times capacity
@@ -164,10 +176,5 @@ public class Decompress
 			newList[i] = list[i];
 		}
 		return newList;
-
-
-
-
-
 	}
 } 
