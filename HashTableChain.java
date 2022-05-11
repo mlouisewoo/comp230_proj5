@@ -66,8 +66,8 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 	  //************************************************************************
 	    private LinkedList<Entry<K,V>>[] table;
 	    private int numKeys;
-	    private static final int CAPACITY = 571;
-	    private static final double LOAD_THRESHOLD = .75;
+	    private static final int CAPACITY = 5431;
+	    private static final double LOAD_THRESHOLD = .69;
 		private int timesRehashed;
 	
 	//Constructor methods

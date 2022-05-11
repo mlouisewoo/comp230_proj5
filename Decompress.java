@@ -48,7 +48,6 @@ public class Decompress
               		for(int i=32; i<127; i++)
               		{
                   		dict[count] = Character.toString((char)i);
-                  		System.out.print(dict[count] + " ");
 						count++;
               		}
   
@@ -60,7 +59,6 @@ public class Decompress
 			  		//loop through the file to decompress
 			  		//output the text that corresponds with the first code
 			  		int q = binaryFile.readInt();
-					System.out.println("\n" + q);
 			  		output.print(dict[q]);
 	
 			        //read through binary file and apply decompression algorithm
@@ -136,7 +134,7 @@ public class Decompress
             while(badinput);
 		  
             //ask user for rerun
-            System.out.println("Do you want to compress another file? (y or n)");
+            System.out.println("Do you want to decompress another file? (y or n)");
             input = sc.nextLine();
   
 			//validation    
