@@ -1,7 +1,9 @@
-/* Summary:
- * TODO
+/* Summary: This program compresses a text file and writes the compressed
+ * version to a new binary file.
+ * 
  * Authors: Cassidy Spencer and Madeleine Woo
- * Date: 4/23/2022
+ * 
+ * Date: 5/10/2022
  */
 import java.util.*;
 import java.io.*;
@@ -40,7 +42,6 @@ public class Compress
 											
 					//start timer
 					startTime = System.currentTimeMillis(); 
-				    	//if doesnt work use System.nanoTime()
 
 					// get size of OG file
 					File file = new File(filename);
@@ -63,48 +64,39 @@ public class Compress
 					dict.put("\t", count++);
 
 					//loop through the file to compress
-					//TODO: change prefix to something else
 					String[] prefix = new String[1];
 					prefix[0] = "";
-					//String prefix = "";
 					int character = readFile.read();
 					int value = 0;
 					prefix[0] += Character.toString((char)character);
 					while(character != -1)
 					{
-						//prefix[0] += Character.toString((char)character);
-						//System.out.println("Line 77 prefix = "+prefix[0]);
 						//if prefix is in dict
 						if(dict.get(prefix[0]) != null) 
 						{
-							//compFile.writeInt(dict.get(prefix));
-							//prefix += (char)readFile.read();
 							value = dict.get(prefix[0]);
-							System.out.println("value for "+prefix[0] + " : " + value);
-						//	System.out.print(prefix[0]+" ");
 							character = readFile.read();
-							System.out.println("new character: "+ Character.toString((char)character) 
-													+ "("+character+")");
 							prefix[0] += Character.toString((char)character);
 						}
+						//if prefix is not in the dictionary
 						else if (dict.get(prefix[0]) == null)
 						{
 							dict.put(prefix[0], count);
-							//add the next smallest prefix value to compress file
-							System.out.println("putting " + prefix[0] + " at " + count);
-							System.out.println("writing " + value);
 							count++;
+							//add the next smallest prefix value to compress file
 							compFile.writeInt(value);	
 							String temp = prefix[0];
+							//add the last letter of the old prefix to the
+							//beginning of the new prefix
 							prefix[0] = temp.charAt(temp.length()-1) + "";
 						}
-						//character = readFile.read();
 					}
 
 					logFile.println("Compression of " + filename);
 
-					//end timerv
+					//end timer
 					finalTime = System.currentTimeMillis() - startTime;
+					long finalTimeSeconds = finalTime/1000;
 
 					//get size of NEW file
 					File newFile = new File(filename + ".zzz");
@@ -112,7 +104,7 @@ public class Compress
 
 					//write to log file
 					logFile.println("Compressed from " + size + " to " + newSize);
-					logFile.println("Compression took " + finalTime + " milliseconds");
+					logFile.println("Compression took " + finalTimeSeconds + " seconds");
 					logFile.println("The dictionary contains " + dict.size() + "total entries");
 					logFile.println("The table was rehashed " + dict.getTimesRehashed() + " times");
 
@@ -121,7 +113,7 @@ public class Compress
 					compFile.close();
 					logFile.close();
 
-  }//end try
+  				}//end try
   				catch(FileNotFoundException e)
 				{
 					System.out.println("Cannot find file. Please enter a proper filename.");
@@ -132,9 +124,9 @@ public class Compress
 				{
 				    System.out.println(e.getMessage());
 					System.exit(1);
-						}   
-			    	}   
-			    	while(badinput);	
+				}   
+			}   
+			while(badinput);	
 			
 			//ask user for rerun
 			System.out.println("Do you want to compress another file? (y or n)");
