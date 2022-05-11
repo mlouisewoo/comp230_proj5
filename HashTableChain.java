@@ -178,6 +178,8 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 		LinkedList<Entry<K,V>>[] oldTable = table;
 		table = new LinkedList[2 * oldTable.length + 1];
 
+		numkeys = 0;
+
 		//Reinsert items from oldTable
 		for(int i=0; i<oldTable.length; i++){
 			if(oldTable[i] != null){
