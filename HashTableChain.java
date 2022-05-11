@@ -1,6 +1,9 @@
-/*TODO Description:
+/* Description: HashTableChain implements a HashMap to create a list of linked
+ * lists. 
+ * 
  * Authors: Cassidy Spencer and Madeleine Woo
- * Date: 4/25/2022
+ * 
+ * Date: 5/10/2022
  */
 
 import java.util.*;
@@ -51,6 +54,10 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 			return oldVal;
 		}
       	
+		/* Override the toString method to display
+		 * the key and value
+		 * @return a string
+		 */
 		public String toString()
         {
           return key.toString() + " = " + value.toString();
@@ -63,7 +70,7 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 	    private static final double LOAD_THRESHOLD = .75;
 		private int timesRehashed;
 	
-	//Consrtuctor methods
+	//Constructor methods
 	public HashTableChain()
 	{
 		table = new LinkedList[CAPACITY];
@@ -76,25 +83,32 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 	        numKeys = 0;
 	}
 
-	//get value for a specific key
+	/* get value for a specific key
+	 * @param key is a key in the HashTableChain
+	 * @return the value associated with the key or 
+	 * null if the key is not found
+	 */
 	public V get(Object key)
 	{
-	      int index = key.hashCode() % table.length;
-	      if(index<0)
-		index += table.length;
-	      if(table[index] == null)
-		return null;
+		int index = key.hashCode() % table.length;
+	    //table wraps around to the beginning
+		//if the index is negative
+		if(index < 0)
+			index += table.length;
+	    if(table[index] == null)
+			return null;
 
-	      for(Entry<K,V> nextItem:table[index])
-	      {
-		if(nextItem.getKey().equals(key))
-		return nextItem.getValue();
-	      }
+	    for(Entry<K,V> nextItem:table[index])
+	    {
+			if(nextItem.getKey().equals(key))
+			return nextItem.getValue();
+	    }
 
 		return null;
 	}
 
-	/*return true if table contains no key-value mappings*/
+	/* Determines if the hashtable doesn't have keys
+	 * @return true if table contains no key-value mappings*/
 	public boolean isEmpty()
 	{
 		if(numKeys == 0)
@@ -104,7 +118,7 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 	}
 
 	/* Method put for class HashtableChain
-	 * key-value pair is insirted in the table
+	 * key-value pair is inserted in the table
 	 * and numKeys is incremented. If the key is 
 	 * already in the table, its value is changed to the
 	 * new  val and numKeys is unchanged.
@@ -145,30 +159,21 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 			rehash();
 			return null;
 		}
-	
+	/* Retrieves the size of the hashtable
+	 * @return the number of keys in the HashTableChain
+	 */	
 	public int size()
 	{
-		/*int count = 0;
-		for(int i=0; i<table.length; i++){
-			for (Entry<K,V> nextItem : table[i]){
-					count++;
-				}
-			}
-
-			return count;
-		}*/
 		return numKeys;
 	}
 
-	//rehash method
+	/* Allocates a new hash table with double the capacity,
+	 * reinserts each old table entry that has not been deleted
+	 * into the hashtable, and references the new table instead
+	 * of the original
+	 */
 	public void rehash()
 	{
-		/* 1. allocate a new hash table with 2xcapacity
-		 * 2. reinsert each old table entry that has not been deleted into the
-		 * hash table
-		 * 3. reference the new table instead of the original
-		 */ 
-
 		//save temp table 
 		LinkedList<Entry<K,V>>[] oldTable = table;
 		table = new LinkedList[2 * oldTable.length + 1];
@@ -184,82 +189,49 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 		timesRehashed++;
 
 	}
-	//accessor method for timesRehahsed
+	
+	/* Gets the number of times the program
+	 * rehashed the table
+	 * @return timesRehashed
+	 */
 	public int getTimesRehashed()
-	{	return timesRehashed;	}
+	{	
+		return timesRehashed;	
+	}
 	
-	/*public V remove(Object key)
-	{ return null; }	*/
-	//remove method
-		/*public V remove(Object key)
-		{	
-			K key = (K)key;
-			int index = key.hasCode() % table.length;
-			if(index < 0)
-				index += table.length;
-	
-			//key is not in the table
-			if(table[index] == null)
-				return null;
-			
-			//Entry<K, V> current = table[index].head;
-			ListIterator<Entry<K, V>> iter = table[index].iterator();
-			
-			
-			if (current.getKey().equals(key)) 
-			{
-				table[index].head = current.next;
-				if (table[index].size == 0)
-				{
-					//DELETED?
-					table[index] = null;
-				}	
-				numKeys--;
-			}
-			else
-			{
-				while(iter.hasNext())
-				//while (current.hasNext())
-				{
-					if (current.next.getKey().equals(key))
-					{
-						current.next = current.next.next;
-						numkeys--;
-						return current.next.getValue();
-					}
-					current = current.next;
-				}
-			}
+	/* Removes a key-value pair from the 
+	 * hashtable
+	 * @param key the key of the object
+	 * to remove
+	 * @return the value of the object
+	 * that has been removed
+	 */
+	public V remove(Object key)
+	{
+		int index = key.hashCode() % table.length;
+		if(index < 0)
+			index += table.length;
 
-		}*/
-
-		public V remove(Object key)
-		{
-			int index = key.hashCode() % table.length;
-			if(index < 0)
-				index += table.length;
-
-			//key is not in the table
-			if(table[index] == null)
-				return null;
-
-			//search the list at table[index] to find the key
-		
-			for (Entry<K, V> nextItem : table[index])
-			{
-				//if we find the key, remove the entry
-				if (nextItem.getKey().equals(key))
-				{	
-					V value = nextItem.getValue();
-					table[index].remove(nextItem);
-					numKeys--;
-					if(table[index].size() == 0) //TODO trying to see if list is empty
-						table[index] = null;
-					return value; //TODO return value associated with the key 
-				}
-			}
+		//key is not in the table
+		if(table[index] == null)
 			return null;
 
+		//search the list at table[index] to find the key
+		for (Entry<K, V> nextItem : table[index])
+		{
+			//if we find the key, remove the entry
+			if (nextItem.getKey().equals(key))
+			{	
+				V value = nextItem.getValue();
+				table[index].remove(nextItem);
+				numKeys--;
+				if(table[index].size() == 0) //see if list is empty
+					table[index] = null;
+				return value; //return value associated with the key 
+			}
 		}
+		return null;
+
+	}
 }
 
