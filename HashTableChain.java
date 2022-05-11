@@ -66,8 +66,8 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 	  //************************************************************************
 	    private LinkedList<Entry<K,V>>[] table;
 	    private int numKeys;
-	    private static final int CAPACITY = 5431;
-	    private static final double LOAD_THRESHOLD = .69;
+	    private static final int CAPACITY = 811;
+	    private static final double LOAD_THRESHOLD = .75;
 		private int timesRehashed;
 	
 	//Constructor methods
@@ -178,7 +178,7 @@ public class HashTableChain <K,V> implements KWHashMap<K,V>
 		LinkedList<Entry<K,V>>[] oldTable = table;
 		table = new LinkedList[2 * oldTable.length + 1];
 
-		numkeys = 0;
+		numKeys = 0;
 
 		//Reinsert items from oldTable
 		for(int i=0; i<oldTable.length; i++){
